@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,10 +36,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -214,22 +215,21 @@ private fun ResultCard(
     }
 
     Card(modifier = modifier, elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)) {
-        Column(
+        Row(
             modifier = Modifier
                 .wrapContentHeight()
-                .padding(12.dp)
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = time.toTime())
-            Row(
-                modifier = Modifier
-                    .height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
+            Column(modifier = Modifier
+                .height(IntrinsicSize.Min)
+                .weight(1f)) {
+                Text(text = time.toTime())
                 Text(modifier = Modifier.weight(1f), text = message)
-                VerticalDivider()
-                Text(modifier = Modifier.weight(0.3f), text = state, color = color)
             }
+            Text(modifier = Modifier.weight(0.3f), text = state, color = color)
         }
-
     }
 }
 
@@ -239,6 +239,7 @@ private fun ResultCarPreview() {
     PrivAppTesterTheme {
         Column {
             ResultCard(message = "Succeed Test", succeed = true)
+            Spacer(modifier = Modifier.height(8.dp))
             ResultCard(message = "Failed Test", succeed = false)
         }
     }

@@ -7,15 +7,6 @@ android {
     namespace = "com.android.privapptester"
     compileSdk = 34
 
-//    signingConfigs {
-//        getByName("debug") {
-//            storeFile = file("D:\\Side\\aosp_platform.keystore")
-//            storePassword = "android"
-//            keyAlias = "platform"
-//            keyPassword = "android"
-//        }
-//    }
-
     defaultConfig {
         applicationId = "com.android.privapptester"
         minSdk = 31
@@ -48,6 +39,9 @@ android {
     buildFeatures {
         compose = true
     }
+    testCoverage{
+        jacocoVersion = "0.8.8"
+    }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
@@ -69,10 +63,13 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     testImplementation(libs.junit)
+    testImplementation(libs.org.jacoco.core)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    debugImplementation(libs.ui.test.manifest)
 }
