@@ -2,12 +2,15 @@ package com.android.privapptester
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
+import com.android.privapptester.core.IRenderer
 import com.android.privapptester.pattern.Model
 import com.android.privapptester.pattern.View
 import com.android.privapptester.usecase.OpenFileTestUseCase
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), IRenderer {
     private val model: Model = Model(OpenFileTestUseCase())
 
     private val view: View = View(
@@ -23,4 +26,6 @@ class MainActivity : ComponentActivity() {
 
         view.show()
     }
+
+    override fun draw(content: @Composable () -> Unit) = setContent(null, content)
 }
