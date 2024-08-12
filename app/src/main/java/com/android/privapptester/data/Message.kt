@@ -9,6 +9,12 @@ data class Message(
     companion object {
         const val TYPE_MESSAGE = 0
         const val TYPE_RESULT = 1
+
+        fun generateMessage(content: String, succeed: Boolean) =
+            Message(System.currentTimeMillis(), TYPE_MESSAGE, content, succeed)
+
+        fun generateResult(content: String, succeed: Boolean) =
+            Message(System.currentTimeMillis(), TYPE_RESULT, content, succeed)
     }
 
     override fun toString(): String =
