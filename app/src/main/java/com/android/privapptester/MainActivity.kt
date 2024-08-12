@@ -5,9 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import com.android.privapptester.pattern.Model
 import com.android.privapptester.pattern.View
+import com.android.privapptester.usecase.OpenFileTestUseCase
 
 class MainActivity : ComponentActivity() {
-    private val model: Model = Model()
+    private val model: Model = Model(OpenFileTestUseCase())
 
     private val view: View = View(
         onBackPressedDispatcher = onBackPressedDispatcher,

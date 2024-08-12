@@ -1,7 +1,6 @@
 package com.android.privapptester.pattern
 
 import android.icu.text.SimpleDateFormat
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.setContent
@@ -48,6 +47,12 @@ import com.android.privapptester.data.Message
 import com.android.privapptester.ui.theme.PrivAppTesterTheme
 import java.util.Locale
 
+private const val TAG : String = "View"
+
+private const val TIME_FORMAT : String = "HH:mm:ss"
+
+private fun Long.toTime(): String = SimpleDateFormat(TIME_FORMAT, Locale.TAIWAN).format(this)
+
 class View(
     private val onBackPressedDispatcher: OnBackPressedDispatcher,
     private val messages: List<Message>,
@@ -79,7 +84,6 @@ private fun MainPage(
     callback: ((UserIntent) -> Unit) = {},
     messages: List<Message> = emptyList()
 ) {
-    Log.d("MainPage", "Renderer")
     Scaffold(modifier = modifier, topBar = {
         TopAppBar(
             title = {
@@ -271,4 +275,3 @@ private fun MessageCardPreview() {
     }
 }
 
-private fun Long.toTime(): String = SimpleDateFormat("HH:mm:ss", Locale.TAIWAN).format(this)
