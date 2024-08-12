@@ -1,10 +1,13 @@
 package com.android.privapptester
 
 import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.compose.setContent
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import com.android.privapptester.core.IRenderer
 import com.android.privapptester.data.Message
 import com.android.privapptester.pattern.UserIntent
 import com.android.privapptester.pattern.View
@@ -19,8 +22,8 @@ class UITest {
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @Test
-    fun initTest(){
-        val view : View = View(onBackPressedDispatcher = OnBackPressedDispatcher(), messages = emptyList(), userIntentHandler = {}, renderer = composeTestRule.activity)
+    fun initTest() {
+        val view = generateView()
 
         view.show()
 
@@ -28,12 +31,12 @@ class UITest {
     }
 
     @Test
-    fun openFileTestClickTest(){
-        var intent : UserIntent? = null
+    fun openFileTestClickTest() {
+        var intent: UserIntent? = null
 
-        val view : View = View(onBackPressedDispatcher = OnBackPressedDispatcher(), messages = emptyList(), userIntentHandler = {
+        val view = generateView() {
             intent = it
-        }, renderer = composeTestRule.activity)
+        }
 
         view.show()
 
@@ -43,14 +46,14 @@ class UITest {
     }
 
     @Test
-    fun messageTest(){
-        val messages : List<Message> = listOf(
+    fun messageTest() {
+        val messages: List<Message> = listOf(
             Message(System.currentTimeMillis(), Message.TYPE_MESSAGE, "Message1"),
             Message(System.currentTimeMillis(), Message.TYPE_RESULT, "Result1", true),
             Message(System.currentTimeMillis(), Message.TYPE_RESULT, "Result2", false)
         )
 
-        val view : View = View(onBackPressedDispatcher = OnBackPressedDispatcher(), messages = messages, userIntentHandler = {}, renderer = composeTestRule.activity)
+        val view = generateView(messages = messages)
 
         view.show()
 
@@ -67,5 +70,18 @@ class UITest {
             .assertIsDisplayed()
         composeTestRule.onNodeWithText("Failed")
             .assertIsDisplayed()
+    }
+
+    private fun generateView(
+        onBackPressedDispatcher: OnBackPressedDispatcher = OnBackPressedDispatcher(),
+        messages: List<Message> = emptyList(),
+        userIntentHandler: (UserIntent) -> Unit = {}
+    ): View {
+        val renderer: IRenderer = object : IRenderer {
+            override fun draw(content: @Composable () -> Unit) {
+                composeTestRule.activity.setContent(null, content)
+            }
+        }
+        return View(onBackPressedDispatcher, messages, userIntentHandler, renderer)
     }
 }
