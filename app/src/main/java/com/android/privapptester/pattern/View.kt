@@ -1,9 +1,7 @@
 package com.android.privapptester.pattern
 
 import android.icu.text.SimpleDateFormat
-import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedDispatcher
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -43,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.android.privapptester.core.IRenderer
 import com.android.privapptester.data.Message
 import com.android.privapptester.ui.theme.PrivAppTesterTheme
 import java.util.Locale
@@ -57,11 +56,11 @@ class View(
     private val onBackPressedDispatcher: OnBackPressedDispatcher,
     private val messages: List<Message>,
     private var userIntentHandler: ((UserIntent) -> Unit),
-    private var renderer: ComponentActivity
+    private var renderer: IRenderer
 ) {
 
     fun show() {
-        renderer.setContent {
+        renderer.draw {
 
             PrivAppTesterTheme {
                 MainPage(
