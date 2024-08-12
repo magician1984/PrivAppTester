@@ -6,8 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import com.android.privapptester.core.IRenderer
-import com.android.privapptester.pattern.Model
-import com.android.privapptester.pattern.View
+import com.android.privapptester.presenter.Model
+import com.android.privapptester.presenter.View
 import com.android.privapptester.usecase.OpenFileTestUseCase
 
 class MainActivity : ComponentActivity(), IRenderer {

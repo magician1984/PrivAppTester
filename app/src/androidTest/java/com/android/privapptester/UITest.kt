@@ -9,8 +9,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.android.privapptester.core.IRenderer
 import com.android.privapptester.data.Message
-import com.android.privapptester.pattern.UserIntent
-import com.android.privapptester.pattern.View
+import com.android.privapptester.presenter.UserIntent
+import com.android.privapptester.presenter.View
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
