@@ -30,6 +30,11 @@ android {
                 "proguard-rules.pro"
             )
         }
+        debug {
+            isMinifyEnabled = false
+            enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -72,6 +77,7 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     androidTestImplementation(libs.ui.test.junit4)
+    androidTestImplementation(libs.mockito.android)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
