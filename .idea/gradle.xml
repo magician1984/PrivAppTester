@@ -9,6 +9,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/LibCore" />
+            <option value="$PROJECT_DIR$/LibData" />
+            <option value="$PROJECT_DIR$/LibUseCase" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

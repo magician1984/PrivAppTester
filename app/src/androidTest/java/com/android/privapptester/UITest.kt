@@ -7,8 +7,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.android.privapptester.core.IRenderer
-import com.android.privapptester.data.Message
+import com.android.privapptester.core.IData
 import com.android.privapptester.presenter.UserIntent
 import com.android.privapptester.presenter.View
 import org.junit.Rule
@@ -47,10 +46,24 @@ class UITest {
 
     @Test
     fun messageTest() {
-        val messages: List<Message> = listOf(
-            Message(System.currentTimeMillis(), Message.TYPE_MESSAGE, "Message1"),
-            Message(System.currentTimeMillis(), Message.TYPE_RESULT, "Result1", true),
-            Message(System.currentTimeMillis(), Message.TYPE_RESULT, "Result2", false)
+        val messages: List<IData> = listOf(
+            com.android.privapptester.data.IData(
+                System.currentTimeMillis(),
+                IData.TYPE_MESSAGE,
+                "Message1"
+            ),
+            com.android.privapptester.data.IData(
+                System.currentTimeMillis(),
+                IData.TYPE_RESULT,
+                "Result1",
+                true
+            ),
+            com.android.privapptester.data.IData(
+                System.currentTimeMillis(),
+                IData.TYPE_RESULT,
+                "Result2",
+                false
+            )
         )
 
         val view = generateView(messages = messages)
@@ -74,10 +87,11 @@ class UITest {
 
     private fun generateView(
         onBackPressedDispatcher: OnBackPressedDispatcher = OnBackPressedDispatcher(),
-        messages: List<Message> = emptyList(),
+        messages: List<IData> = emptyList(),
         userIntentHandler: (UserIntent) -> Unit = {}
     ): View {
-        val renderer: IRenderer = object : IRenderer {
+        val renderer: com.android.privapptester.core.IRenderer = object :
+            com.android.privapptester.core.IRenderer {
             override fun draw(content: @Composable () -> Unit) {
                 composeTestRule.activity.setContent(null, content)
             }

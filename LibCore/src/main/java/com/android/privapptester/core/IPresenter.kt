@@ -4,8 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 
 interface IPresenter {
-    @Composable
-    fun showUI()
 
     interface IAction
 

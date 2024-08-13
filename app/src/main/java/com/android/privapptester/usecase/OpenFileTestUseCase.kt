@@ -1,6 +1,7 @@
 package com.android.privapptester.usecase
 
-import com.android.privapptester.data.Message
+import com.android.privapptester.core.IData
+import com.android.privapptester.data.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.runBlocking
@@ -24,7 +25,7 @@ class OpenFileTestUseCase : IOpenFileTestUseCase {
         }
     }
 
-    override fun invoke(input: String): Flow<Message> = channelFlow {
+    override fun invoke(input: String): Flow<IData> = channelFlow {
         val root: File = File(input)
 
         if (!root.exists())
@@ -40,7 +41,7 @@ class OpenFileTestUseCase : IOpenFileTestUseCase {
                 false
             }
             runBlocking {
-                send(Message.generateResult(filename, result))
+                send(Result(System.currentTimeMillis(), result, filename))
             }
         }
     }

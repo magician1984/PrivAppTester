@@ -1,7 +1,7 @@
 package com.android.privapptester.presenter
 
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.android.privapptester.data.Message
+import com.android.privapptester.core.IData
 import com.android.privapptester.usecase.IOpenFileTestUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,9 +17,9 @@ class Model(private val openFileTestUseCase: IOpenFileTestUseCase) : CoroutineSc
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + Job()
 
-    private val _messages: SnapshotStateList<Message> = SnapshotStateList()
+    private val _messages: SnapshotStateList<IData> = SnapshotStateList()
 
-    val messages: List<Message>
+    val messages: List<IData>
         get() = _messages
 
     fun handleUserIntent(intent: UserIntent) {
@@ -32,7 +32,7 @@ class Model(private val openFileTestUseCase: IOpenFileTestUseCase) : CoroutineSc
         }
     }
 
-    private fun update(message: Message) {
+    private fun update(message: IData) {
         _messages.add(message)
     }
 }

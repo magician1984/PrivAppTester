@@ -1,6 +1,5 @@
 package com.android.privapptester.core
 
-import android.database.Observable
 import java.io.Closeable
 import kotlin.jvm.Throws
 import kotlin.reflect.KClass

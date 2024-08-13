@@ -1,6 +1,5 @@
 package com.android.privapptester.usecase
 
-import com.android.privapptester.core.IUseCase
-import com.android.privapptester.data.Message
+import com.android.privapptester.core.IData
 
-interface IOpenFileTestUseCase : IUseCase<String, Message>
+interface IOpenFileTestUseCase : com.android.privapptester.core.IUseCase<String, IData>

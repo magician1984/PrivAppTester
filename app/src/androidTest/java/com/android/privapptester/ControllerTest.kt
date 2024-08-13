@@ -12,23 +12,25 @@ import org.mockito.kotlin.verify
 @RunWith(AndroidJUnit4::class)
 class ControllerTest {
 
-    interface MockModule : IController.Module
+    interface MockModule : com.android.privapptester.core.IController.Module
 
     fun interface SubscribeInterface{
-        fun onEvent(event: IController.IControlEventRepository.ControlEvent)
+        fun onEvent(event: com.android.privapptester.core.IController.IControlEventRepository.ControlEvent)
     }
 
-    @Test(expected = IController.ModuleNotCreateException::class)
+    @Test(expected = com.android.privapptester.core.IController.ModuleNotCreateException::class)
     fun controllerInitTest() {
         val controller = Controller()
 
-        val eventModule : IController.Module = controller.getModule(IController.IControlEventRepository::class)
+        val eventModule : com.android.privapptester.core.IController.Module = controller.getModule(
+            com.android.privapptester.core.IController.IControlEventRepository::class)
 
-        assert(eventModule is IController.IControlEventRepository)
+        assert(eventModule is com.android.privapptester.core.IController.IControlEventRepository)
 
-        val fileModule : IController.Module = controller.getModule(IController.IFileController::class)
+        val fileModule : com.android.privapptester.core.IController.Module = controller.getModule(
+            com.android.privapptester.core.IController.IFileController::class)
 
-        assert(fileModule is IController.IFileController)
+        assert(fileModule is com.android.privapptester.core.IController.IFileController)
 
         controller.getModule(MockModule::class)
     }
@@ -39,7 +41,7 @@ class ControllerTest {
 
         val handler = mock<SubscribeInterface>()
 
-        val event = IController.IControlEventRepository.ControlEvent(System.currentTimeMillis(), true, "Test")
+        val event = com.android.privapptester.core.IController.IControlEventRepository.ControlEvent(System.currentTimeMillis(), true, "Test")
 
         repeat(10){
             module.pushEvent(event)

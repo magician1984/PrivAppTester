@@ -2,22 +2,21 @@ package com.android.privapptester.controller
 
 import com.android.privapptester.controller.module.ControlEventRepository
 import com.android.privapptester.controller.module.FileController
-import com.android.privapptester.core.IController
 import kotlin.reflect.KClass
 import kotlin.reflect.safeCast
 
-class Controller : IController {
-    private val modules: MutableMap<KClass<out IController.Module>, IController.Module> =
+class Controller : com.android.privapptester.core.IController {
+    private val modules: MutableMap<KClass<out com.android.privapptester.core.IController.Module>, com.android.privapptester.core.IController.Module> =
         mutableMapOf()
 
     init {
-        modules[IController.IControlEventRepository::class] = ControlEventRepository()
-        modules[IController.IFileController::class] = FileController()
+        modules[com.android.privapptester.core.IController.IControlEventRepository::class] = ControlEventRepository()
+        modules[com.android.privapptester.core.IController.IFileController::class] = FileController()
     }
 
-    @Throws(IController.ModuleNotCreateException::class)
-    override fun <T : IController.Module> getModule(clazz: KClass<out T>): T =
-        clazz.safeCast(modules[clazz]) ?: throw IController.ModuleNotCreateException(clazz)
+    @Throws(com.android.privapptester.core.IController.ModuleNotCreateException::class)
+    override fun <T : com.android.privapptester.core.IController.Module> getModule(clazz: KClass<out T>): T =
+        clazz.safeCast(modules[clazz]) ?: throw com.android.privapptester.core.IController.ModuleNotCreateException(clazz)
 
     override fun close() = modules.forEach { it.value.close() }
 }

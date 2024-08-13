@@ -10,7 +10,7 @@ import com.android.privapptester.presenter.Model
 import com.android.privapptester.presenter.View
 import com.android.privapptester.usecase.OpenFileTestUseCase
 
-class MainActivity : ComponentActivity(), IRenderer {
+class MainActivity : ComponentActivity(), com.android.privapptester.core.IRenderer {
     private val model: Model = Model(OpenFileTestUseCase())
 
     private val view: View = View(

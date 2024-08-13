@@ -41,20 +41,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.android.privapptester.core.IRenderer
+import com.android.privapptester.core.IData
 import com.android.privapptester.data.Message
+import com.android.privapptester.data.Result
 import com.android.privapptester.ui.theme.PrivAppTesterTheme
 import java.util.Locale
 
-private const val TIME_FORMAT : String = "HH:mm:ss"
+private const val TIME_FORMAT: String = "HH:mm:ss"
 
 private fun Long.toTime(): String = SimpleDateFormat(TIME_FORMAT, Locale.TAIWAN).format(this)
 
 class View(
     private val onBackPressedDispatcher: OnBackPressedDispatcher,
-    private val messages: List<Message>,
+    private val messages: List<IData>,
     private var userIntentHandler: ((UserIntent) -> Unit),
-    private var renderer: IRenderer
+    private var renderer: com.android.privapptester.core.IRenderer
 ) {
 
     fun show() {
@@ -79,7 +80,7 @@ private fun MainPage(
     modifier: Modifier = Modifier,
     onBackPressedDispatcher: OnBackPressedDispatcher = OnBackPressedDispatcher(),
     callback: ((UserIntent) -> Unit) = {},
-    messages: List<Message> = emptyList()
+    messages: List<IData> = emptyList()
 ) {
     Scaffold(modifier = modifier, topBar = {
         TopAppBar(
@@ -124,8 +125,15 @@ private fun MainPagePreview() {
     PrivAppTesterTheme {
         MainPage(
             messages = listOf(
-                Message(System.currentTimeMillis(), Message.TYPE_MESSAGE, "Message1"),
-                Message(System.currentTimeMillis() + 1000, Message.TYPE_RESULT, "Result1", true)
+                Message(
+                    System.currentTimeMillis(),
+                    true,
+                    "Message1"
+                ), Result(
+                    System.currentTimeMillis() + 1000,
+                    true,
+                    "Result1"
+                )
             )
         )
     }
@@ -149,7 +157,7 @@ private fun ControlPanelPreview() {
 }
 
 @Composable
-private fun MessageList(modifier: Modifier = Modifier, messages: List<Message>) {
+private fun MessageList(modifier: Modifier = Modifier, messages: List<IData>) {
 
     val state = rememberLazyListState()
 
@@ -165,15 +173,15 @@ private fun MessageList(modifier: Modifier = Modifier, messages: List<Message>) 
     ) {
         items(items = messages) {
             when (it.type) {
-                Message.TYPE_MESSAGE -> {
+                IData.TYPE_MESSAGE -> {
                     MessageCard(modifier = Modifier.fillMaxWidth(), message = it.content)
                 }
 
-                Message.TYPE_RESULT -> {
+                IData.TYPE_RESULT -> {
                     ResultCard(
                         modifier = Modifier.fillMaxWidth(),
                         message = it.content,
-                        succeed = it.succeed
+                        succeed = it.normal
                     )
                 }
             }
@@ -184,9 +192,16 @@ private fun MessageList(modifier: Modifier = Modifier, messages: List<Message>) 
 @Preview(showBackground = true)
 @Composable
 private fun MessageListPreview() {
-    val list: List<Message> = listOf(
-        Message(System.currentTimeMillis(), Message.TYPE_MESSAGE, "Message1"),
-        Message(System.currentTimeMillis() + 1000, Message.TYPE_RESULT, "Result1", true)
+    val list: List<IData> = listOf(
+        Message(
+            System.currentTimeMillis(),
+            true,
+            "Message1"
+        ), Result(
+            System.currentTimeMillis() + 1000,
+            true,
+            "Result1"
+        )
     )
 
     PrivAppTesterTheme {
@@ -223,9 +238,11 @@ private fun ResultCard(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(modifier = Modifier
-                .height(IntrinsicSize.Min)
-                .weight(1f)) {
+            Column(
+                modifier = Modifier
+                    .height(IntrinsicSize.Min)
+                    .weight(1f)
+            ) {
                 Text(text = time.toTime())
                 Text(modifier = Modifier.weight(1f), text = message)
             }

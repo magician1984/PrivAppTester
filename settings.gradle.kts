@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "PrivAppTester"
 include(":app")
- 
+include(":LibCore")
+include(":LibData")
+include(":LibUseCase")
