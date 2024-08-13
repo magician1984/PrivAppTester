@@ -1,4 +1,4 @@
-package com.android.privapptester.pattern
+package com.android.privapptester.presenter
 
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.android.privapptester.data.Message

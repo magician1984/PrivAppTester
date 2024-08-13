@@ -8,4 +8,6 @@ interface IUseCase<I, O> {
     interface IUseCaseNoInput<O> : IUseCase<Unit, O> {
         operator fun invoke(): Flow<O> = invoke(Unit)
     }
+
+    interface IUseCaseNoIO : IUseCaseNoInput<Unit>
 }

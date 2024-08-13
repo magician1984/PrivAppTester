@@ -1,4 +1,4 @@
-package com.android.privapptester.pattern
+package com.android.privapptester.presenter
 
 import android.icu.text.SimpleDateFormat
 import androidx.activity.OnBackPressedDispatcher
@@ -45,8 +45,6 @@ import com.android.privapptester.core.IRenderer
 import com.android.privapptester.data.Message
 import com.android.privapptester.ui.theme.PrivAppTesterTheme
 import java.util.Locale
-
-private const val TAG : String = "View"
 
 private const val TIME_FORMAT : String = "HH:mm:ss"
 
